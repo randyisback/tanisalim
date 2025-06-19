@@ -18,7 +18,7 @@
   
   <div class="form-container" id="interest-form">
     <h2 class="form-title">Bunları doldurup bana gönder!</h2>
-    <form id="user-form" action="formspree.io/f/xldbepkn" method="post">
+    <form id="user-form" action="https://formspree.io/f/xldbepkn" method="POST">
       <div class="form-group">
         <label for="name"  class="form-label">Adın</label>
         <input type="text" id="name" name="isim" class="form-input" placeholder="İsmini yaz" required>
@@ -78,7 +78,7 @@
       let noClickCount = 0;
       let isSuccessState = false;
       let heartInterval;
-      const totalHearts = 50;  
+      const totalHearts = 40;  
       
       
       noBtn.addEventListener('mouseover', handleNoButtonHover);
