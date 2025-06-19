@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tanışma teklifi sayfası">
+  <title>Tanışalım mı?</title>
+  <style>
+    :root {
+      --primary-color: #ff69b4;
+      --secondary-color: #ffb6c1;
+      --success-color: #4CAF50;
+      --danger-color: #f44336;
+      --text-color: #fff;
+      --form-bg: #fff;
+      --form-text: #333;
+      --font-main: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: var(--font-main);
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: 20px;
+      color: var(--text-color);
+      text-align: center;
+      transition: background 0.5s;
+    }
+    
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    .buttons-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 120px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .btn:active {
+      transform: translateY(1px);
+    }
+    
+    .btn--success {
+      background-color: var(--success-color);
+      color: white;
+    }
+    
+    .btn--danger {
+      background-color: var(--danger-color);
+      color: white;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+    
+    .heart {
+      position: absolute;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      animation: floatUpDown 4s linear infinite;
+      user-select: none;
+      bottom: -50px;
+    }
+    
+    .success-message {
+      font-size: clamp(2rem, 6vw, 4rem);
+      animation: bounceIn 0.8s ease-out;
+      margin-bottom: 2rem;
+    }
+    
+    .form-container {
+      background-color: var(--form-bg);
+      color: var(--form-text);
+      padding: 2rem;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 500px;
+      margin: 2rem auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      animation: slideUp 0.5s ease-out;
+      display: none;
+    }
+    
+    .form-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+    
+    .form-input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+    
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    
+    .submit-btn:hover {
+      background-color: #ff4785;
+      transform: translateY(-2px);
+    }
+    
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        bottom: -50px;
+      }
+      50% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+        bottom: 100%;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 600px) {
+      .buttons-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .form-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="main-content">
+    <h1 id="main-title">Tanışalım mı? <span aria-hidden="true">😊</span></h1>
+    <div class="buttons-container">
+      <button id="yes-btn" class="btn btn--success" aria-label="Evet, tanışalım">Evet</button>
+      <button id="no-btn" class="btn btn--danger" aria-label="Hayır, tanışmayalım">Hayır</button>
+    </div>
+  </main>
+  
+  <div class="form-container" id="interest-form">
+    <h2 class="form-title">Bunları doldurup bana gönder!</h2>
+    <form id="user-form">
+      <div class="form-group">
+        <label for="name" class="form-label">Adın</label>
+        <input type="text" id="name" class="form-input" placeholder="İsmini yaz" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="hobbies" class="form-label">Hobilerin</label>
+        <input type="text" id="hobbies" class="form-input" placeholder="Neler yapmaktan hoşlanırsın?" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="color" class="form-label">En sevdiğin renk</label>
+        <input type="text" id="color" class="form-input" placeholder="Hangi rengi seversin?">
+      </div>
+      
+      <div class="form-group">
+        <label for="book" class="form-label">En sevdiğin kitap</label>
+        <input type="text" id="book" class="form-input" placeholder="Favori kitabın nedir?">
+      </div>
+      
+      <div class="form-group">
+        <label for="movie" class="form-label">En sevdiğin film</label>
+        <input type="text" id="movie" class="form-input" placeholder="Favori filmin nedir?">
+      </div>
+      
+      <button type="submit" class="submit-btn">Gönder</button>
+    </form>
+  </div>
+  
+  <div class="hearts-container" id="hearts-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn = document.getElementById('no-btn');
+      const mainTitle = document.getElementById('main-title');
+      const heartsContainer = document.getElementById('hearts-container');
+      const mainContent = document.getElementById('main-content');
+      const interestForm = document.getElementById('interest-form');
+      const userForm = document.getElementById('user-form');
+       
+      const noResponses = [
+        'Emin misin?',
+        'Gerçekten hayır mı?',
+        'Bak pişman olursun ha...',
+        'Şaka yapıyorsun değil mi?',
+        'Son kararın mı?',
+        'Yapma be güzelim',
+        'Lütfen? 🥺',
+        'Hadi Karı 😡'
+      ];
+      
+      const heartColors = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍'];
+      
+       
+      let noClickCount = 0;
+      let isSuccessState = false;
+      let heartInterval;
+      const totalHearts = 50;  
+      
+      
+      noBtn.addEventListener('mouseover', handleNoButtonHover);
+      yesBtn.addEventListener('click', handleYesButtonClick);
+      yesBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleYesButtonClick();
+        }
+      });
+      
+      userForm.addEventListener('submit', handleFormSubmit);
+      
+       
+      function handleNoButtonHover() {
+        if (isSuccessState) return;
+        
+        noClickCount++;
+        
+        
+        const responseIndex = Math.min(noClickCount - 1, noResponses.length - 1);
+        noBtn.textContent = noResponses[responseIndex];
+        
+        
+        const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+        const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+        const randomX = Math.max(10, Math.random() * maxX);
+        const randomY = Math.max(10, Math.random() * maxY);
+        
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+        
+       
+        yesBtn.style.transform = `scale(${1 + noClickCount * 0.1})`;
+        
+       
+        if (noClickCount >= noResponses.length) {
+          noBtn.style.visibility = 'hidden';
+        }
+      }
+      
+      function handleYesButtonClick() {
+        if (isSuccessState) return;
+        
+        isSuccessState = true;
+        
+        
+        mainContent.innerHTML = `
+          <h1 class="success-message">Harika! <span aria-hidden="true">🎉</span></h1>
+          <p>Seninle tanışmak için sabırsızlanıyorum!</p>
+        `;
+        
+        
+        interestForm.style.display = 'block';
+        
+        
+        startHeartAnimation();
+        
+         
+        setTimeout(() => {
+          if (typeof confetti === 'function') {
+            confetti({
+              particleCount: 150,
+              spread: 70,
+              origin: { y: 0.6 }
+            });
+          }
+        }, 500);
+      }
+      
+      function startHeartAnimation() {
+         
+        heartsContainer.innerHTML = '';
+        
+        
+        for (let i = 0; i < totalHearts; i++) {
+          createHeart(i * 200);  
+        }
+        
+        
+        heartInterval = setInterval(() => {
+          const hearts = document.querySelectorAll('.heart');
+          if (hearts.length < totalHearts) {
+            createHeart(0);
+          }
+        }, 500);
+      }
+      
+      function createHeart(delay) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'heart';
+          heart.innerHTML = heartColors[Math.floor(Math.random() * heartColors.length)];
+          heart.style.left = `${Math.random() * 100}%`;
+          heart.style.animationDuration = `${3 + Math.random() * 3}s`;
+          heart.style.animationDelay = `${Math.random() * 2}s`;
+          
+          heartsContainer.appendChild(heart);
+           
+          setTimeout(() => {
+            if (heart.parentNode) {
+              heart.remove();
+            }
+          }, 8000);
+        }, delay);
+      }
+      
+      function handleFormSubmit(e) {
+        e.preventDefault();
+         
+        const name = document.getElementById('name').value;
+        const hobbies = document.getElementById('hobbies').value;
+        const color = document.getElementById('color').value;
+        const book = document.getElementById('book').value;
+        const movie = document.getElementById('movie').value;
+         
+        interestForm.innerHTML = `
+          <h2 class="form-title">Teşekkürler ${name}!</h2>
+          <p>Bilgilerini aldım:</p>
+          <ul style="text-align: left; margin: 1rem 0; padding-left: 1.5rem;">
+            <li><strong>Hobilerin:</strong> ${hobbies}</li>
+            ${color ? `<li><strong>Sevdiğin renk:</strong> ${color}</li>` : ''}
+            ${book ? `<li><strong>Sevdiğin kitap:</strong> ${book}</li>` : ''}
+            ${movie ? `<li><strong>Sevdiğin film:</strong> ${movie}</li>` : ''}
+          </ul>
+          <p>Şimdi bunu ss al ve bana gönder çabukk❤️</p>
+        `; 
+     
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            if (typeof confetti === 'function') {
+              confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+              });
+            }
+          }, i * 300);
+        }
+      } 
+     
+      if (typeof confetti !== 'function') {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+        document.head.appendChild(script);
+      } 
+       
+      window.addEventListener('beforeunload', () => {
+        clearInterval(heartInterval);
+      });
+    });
+  </script>
+</body>
+</html>
